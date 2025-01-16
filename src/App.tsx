@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
@@ -7,9 +7,11 @@ function App() {
   const [lastName, setLastName] = useState('');
 
   useEffect(() => {
-    // Проверяем, доступен ли Telegram Web App API
-    if (window.Telegram && window.Telegram.WebApp) {
-      const user = window.Telegram.WebApp.initDataUnsafe?.user || {};
+    // Указываем тип `any` для `window.Telegram`, чтобы избежать ошибок
+    const Telegram = (window as any).Telegram;
+
+    if (Telegram && Telegram.WebApp) {
+      const user = Telegram.WebApp.initDataUnsafe?.user || {};
 
       setUsername(user.username || 'Неизвестный пользователь');
       setFirstName(user.first_name || '');
